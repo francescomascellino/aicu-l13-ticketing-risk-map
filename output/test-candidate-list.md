@@ -78,7 +78,7 @@ Non proporre una suite completa.
 | Priorità | Comportamento (errore atteso) | Rischio | Livello | Controllo |
 |---|---|---|---|---|
 | **1** | `alta`+`telefono` produce un label diverso da **intervento rapido** | L'unica combinazione che produce il label più severo non viene preservata | Unit | `computeUrgency("alta", "telefono") === "intervento rapido"` |
-| **2** | `computeUrgency("critica", "sms")` lancia eccezione o restituisce `undefined` | Input fuori dal dominio noto non vengono gestiti con un fallback prevedibile | Unit | `computeUrgency("critica", "sms")` restituisce un default, non eccezione/undefined |
+| **2** | `computeUrgency("critica", "sms")` lancia eccezione o restituisce `undefined` o viene accettato | Dato fuori contract non bloccato dalla validazione | API | `computeUrgency("critica", "sms")` genera un `400` + `validation.sourceChannel` |
 | **3** | Priorità "bassa" produce label diversi su canali diversi | La monotonia della priorità "bassa" (tutti i canali → monitorare) viene alterata | Unit (property) | `["telefono","chat","email"].every(c => computeUrgency("bassa", c) === "monitorare")` |
 
 ## Primo test da scrivere in L14
